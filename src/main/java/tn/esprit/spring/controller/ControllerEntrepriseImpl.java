@@ -33,7 +33,6 @@ public class ControllerEntrepriseImpl{
 		ientrepriseservice.deleteEntrepriseById(entrepriseId);
 	}
 
-	
 	public int ajouterDepartement(Departement dep) {
 		return ientrepriseservice.ajouterDepartement(dep);
 	}
