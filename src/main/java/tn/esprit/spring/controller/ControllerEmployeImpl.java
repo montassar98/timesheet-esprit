@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.validation.constraints.Pattern;
 
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -30,11 +29,11 @@ public class ControllerEmployeImpl  {
 
 	@Autowired
 	IEmployeService employeService;
-
 	private String login; 
 	private String password; 
 	private Boolean loggedIn;
 
+	String loginPage = "/login.xhtml?faces-redirect=true";
 	private Employe authenticatedUser = null; 
 	private String prenom; 
 	private String nom; 
@@ -70,14 +69,13 @@ public class ControllerEmployeImpl  {
 	public String doLogout()
 	{
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	
-	return "/login.xhtml?faces-redirect=true";
+		return loginPage;
 	}
 
 
 	public String addEmploye() {
 
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return loginPage;
 
 		employeService.addOrUpdateEmploye(new Employe(nom, prenom, email, password, actif, role)); 
 		return "null"; 
@@ -85,7 +83,7 @@ public class ControllerEmployeImpl  {
 
 	public String removeEmploye(int employeId) {
 		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return loginPage;
 
 		employeService.deleteEmployeById(employeId);
 		return navigateTo; 
@@ -94,14 +92,14 @@ public class ControllerEmployeImpl  {
 	public String displayEmploye(Employe empl) 
 	{
 		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return loginPage;
 
 
-		this.setPrenom(empl.getPrenom());
-		this.setNom(empl.getNom());
-		this.setActif(empl.isActif()); 
-		this.setEmail(empl.getEmail());
-		this.setRole(empl.getRole());
+		this.authenticatedUser.setPrenom(empl.getPrenom());
+		this.authenticatedUser.setNom(empl.getNom());
+		this.authenticatedUser.setActif(empl.isActif());
+		this.authenticatedUser.setEmail(empl.getEmail());
+		this.authenticatedUser.setRole(empl.getRole());
 		this.setPassword(empl.getPassword());
 		this.setEmployeIdToBeUpdated(empl.getId());
 
@@ -113,7 +111,7 @@ public class ControllerEmployeImpl  {
 	{ 
 		String navigateTo = "null";
 		
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return loginPage;
 
 		employeService.addOrUpdateEmploye(new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role)); 
 
@@ -243,49 +241,6 @@ public class ControllerEmployeImpl  {
 	public List<Timesheet> getTimesheetsByMissionAndDate(Employe employe, Mission mission, Date dateDebut,
 			Date dateFin) {
 		return employeService.getTimesheetsByMissionAndDate(employe, mission, dateDebut, dateFin);
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
-
-	public boolean isActif() {
-		return actif;
-	}
-
-	public void setActif(boolean actif) {
-		this.actif = actif;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
 	}
 
 	public List<Employe> getEmployes() {
