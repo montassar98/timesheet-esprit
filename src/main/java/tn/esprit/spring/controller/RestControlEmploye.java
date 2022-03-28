@@ -65,8 +65,7 @@ public class RestControlEmploye {
 
 	@PostMapping("/ajouterContrat")
 	@ResponseBody
-	public int ajouterContrat(@RequestBody ContratRequestModel contratRequestModel) {
-		Contrat contrat = new Contrat(contratRequestModel);
+	public int ajouterContrat(@RequestBody Contrat contrat) {
 		iemployeservice.ajouterContrat(contrat);
 		return contrat.getReference();
 	}

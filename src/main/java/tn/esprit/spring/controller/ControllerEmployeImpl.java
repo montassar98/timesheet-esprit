@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.Timesheet;
+import tn.esprit.spring.services.EmployeServiceImpl;
 import tn.esprit.spring.services.IEmployeService;
 
 
@@ -26,13 +28,12 @@ import tn.esprit.spring.services.IEmployeService;
 @ELBeanName(value = "employeController")
 @Join(path = "/", to = "/login.jsf")
 public class ControllerEmployeImpl  {
-
+	private static final Logger loggerr= Logger.getLogger(ControllerEmployeImpl.class);
 	@Autowired
 	IEmployeService employeService;
 	private String login; 
 	private String password; 
 	private Boolean loggedIn;
-
 	String loginPage = "/login.xhtml?faces-redirect=true";
 	private Employe authenticatedUser = null; 
 	private String prenom; 
@@ -53,6 +54,7 @@ public class ControllerEmployeImpl  {
 		authenticatedUser=employeService.authenticate(login, password);
 		if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
 			navigateTo = "/pages/admin/welcome.xhtml?faces-redirect=true";
+			Logger.getLogger(ControllerEmployeImpl.class).info("logiin success");
 			loggedIn = true;
 		}		
 
@@ -61,6 +63,7 @@ public class ControllerEmployeImpl  {
 			
 			FacesMessage facesMessage =
 					new FacesMessage("Login Failed: Please check your username/password and try again.");
+			Logger.getLogger(ControllerEmployeImpl.class).info("logiin failed");
 			FacesContext.getCurrentInstance().addMessage("form:btn",facesMessage);
 		}
 		return navigateTo;	
