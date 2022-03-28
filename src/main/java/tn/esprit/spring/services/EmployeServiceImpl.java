@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import tn.esprit.spring.config.LoginFilter;
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Departement;
 import tn.esprit.spring.entities.Employe;
@@ -22,7 +24,7 @@ import tn.esprit.spring.repository.TimesheetRepository;
 
 @Service
 public class EmployeServiceImpl implements IEmployeService {
-
+	private static final Logger logger= Logger.getLogger(EmployeServiceImpl.class);
 	@Autowired
 	EmployeRepository employeRepository;
 	@Autowired
@@ -52,6 +54,8 @@ public class EmployeServiceImpl implements IEmployeService {
 		}
 		emp.setEmail(email);
 		employeRepository.save(emp);
+		logger.info("user modified with success");
+
 
 	}
 
@@ -102,6 +106,7 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	public int ajouterContrat(Contrat contrat) {
 		contratRepoistory.save(contrat);
+		logger.info("contrat added with success");
 		return contrat.getReference();
 	}
 
@@ -145,6 +150,8 @@ public class EmployeServiceImpl implements IEmployeService {
 		}
 
 		employeRepository.delete(employe);
+		logger.warn("user deleted");
+
 	}
 
 	public void deleteContratById(int contratId) {
