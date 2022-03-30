@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.validation.constraints.Pattern;
 
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.EntrepriseDto;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.Timesheet;
@@ -26,291 +25,267 @@ import tn.esprit.spring.services.IEmployeService;
 @Controller(value = "employeController")
 @ELBeanName(value = "employeController")
 @Join(path = "/", to = "/login.jsf")
-public class ControllerEmployeImpl  {
+public class ControllerEmployeImpl {
 
-	@Autowired
-	IEmployeService employeService;
+    @Autowired
+    IEmployeService employeService;
 
-	private String login; 
-	private String password; 
-	private Boolean loggedIn;
+    private String login;
+    private String password;
+    private Boolean loggedIn;
 
-	private Employe authenticatedUser = null; 
-	private String prenom; 
-	private String nom; 
-	private String email;
-	private boolean actif;
-	private Role role;  
-	public Role[] getRoles() { return Role.values(); }
+    private Employe authenticatedUser = null;
+    private String prenom;
+    private String nom;
+    private String email;
+    private boolean actif;
+    private Role role;
 
-	private List<Employe> employes; 
+    private static final String LOGIN_REDIRECT_URL = "/login.xhtml?faces-redirect=true";
 
-	private Integer employeIdToBeUpdated; // getter et setter
+    public Role[] getRoles() {
+        return Role.values();
+    }
 
+    private List<Employe> employes;
 
-	public String doLogin() {
+    private Integer employeIdToBeUpdated; // getter et setter
 
-		String navigateTo = "null";
-		authenticatedUser=employeService.authenticate(login, password);
-		if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
-			navigateTo = "/pages/admin/welcome.xhtml?faces-redirect=true";
-			loggedIn = true;
-		}		
 
-		else
-		{
-			
-			FacesMessage facesMessage =
-					new FacesMessage("Login Failed: Please check your username/password and try again.");
-			FacesContext.getCurrentInstance().addMessage("form:btn",facesMessage);
-		}
-		return navigateTo;	
-	}
+    public String doLogin() {
 
-	public String doLogout()
-	{
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	
-	return "/login.xhtml?faces-redirect=true";
-	}
+        String navigateTo = "null";
+        authenticatedUser = employeService.authenticate(login, password);
+        if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
+            navigateTo = "/pages/admin/welcome.xhtml?faces-redirect=true";
+            loggedIn = true;
+        } else {
 
+            FacesMessage facesMessage =
+                    new FacesMessage("Login Failed: Please check your username/password and try again.");
+            FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+        }
+        return navigateTo;
+    }
 
-	public String addEmploye() {
+    public String doLogout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+        return "/login.xhtml?faces-redirect=true";
+    }
 
-		employeService.addOrUpdateEmploye(new Employe(nom, prenom, email, password, actif, role)); 
-		return "null"; 
-	}  
 
-	public String removeEmploye(int employeId) {
-		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+    public String addEmploye() {
 
-		employeService.deleteEmployeById(employeId);
-		return navigateTo; 
-	} 
+        if (authenticatedUser == null || !loggedIn) return LOGIN_REDIRECT_URL;
 
-	public String displayEmploye(Employe empl) 
-	{
-		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+        employeService.addOrUpdateEmploye(new Employe(nom, prenom, email, password, actif, role));
+        return "null";
+    }
 
+    public String removeEmploye(int employeId) {
+        String navigateTo = "null";
+        if (authenticatedUser == null || !loggedIn) return LOGIN_REDIRECT_URL;
 
-		this.setPrenom(empl.getPrenom());
-		this.setNom(empl.getNom());
-		this.setActif(empl.isActif()); 
-		this.setEmail(empl.getEmail());
-		this.setRole(empl.getRole());
-		this.setPassword(empl.getPassword());
-		this.setEmployeIdToBeUpdated(empl.getId());
+        employeService.deleteEmployeById(employeId);
+        return navigateTo;
+    }
 
-		return navigateTo; 
+    public String displayEmploye(Employe empl) {
+        String navigateTo = "null";
+        if (authenticatedUser == null || !loggedIn) return LOGIN_REDIRECT_URL;
 
-	} 
 
-	public String updateEmploye() 
-	{ 
-		String navigateTo = "null";
-		
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+        this.setPrenom(empl.getPrenom());
+        this.setNom(empl.getNom());
+        this.setActif(empl.isActif());
+        this.setEmail(empl.getEmail());
+        this.setRole(empl.getRole());
+        this.setPassword(empl.getPassword());
+        this.setEmployeIdToBeUpdated(empl.getId());
 
-		employeService.addOrUpdateEmploye(new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role)); 
+        return navigateTo;
 
-		return navigateTo; 
+    }
 
-	} 
+    public String updateEmploye() {
+        String navigateTo = "null";
 
+        if (authenticatedUser == null || !loggedIn) return LOGIN_REDIRECT_URL;
 
-	// getters and setters 
+        employeService.addOrUpdateEmploye(new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role));
 
-	public IEmployeService getEmployeService() {
-		return employeService;
-	}
+        return navigateTo;
 
-	public void setEmployeService(IEmployeService employeService) {
-		this.employeService = employeService;
-	}
+    }
 
-	public String getLogin() {
-		return login;
-	}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    // getters and setters
 
-	public String getPassword() {
-		return password;
-	}
+    public IEmployeService getEmployeService() {
+        return employeService;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setEmployeService(IEmployeService employeService) {
+        this.employeService = employeService;
+    }
 
+    public String getLogin() {
+        return login;
+    }
 
-	public List<Employe> getAllEmployes() {
-		return employeService.getAllEmployes();
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public Boolean getLoggedIn() {
-		return loggedIn;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setLoggedIn(Boolean loggedIn) {
-		this.loggedIn = loggedIn;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public int ajouterEmploye(Employe employe)
-	{
-		employeService.addOrUpdateEmploye(employe);
-		return employe.getId();
-	}
 
-	public void mettreAjourEmailByEmployeId(String email, int employeId) {
-		employeService.mettreAjourEmailByEmployeId(email, employeId);
+    public List<Employe> getAllEmployes() {
+        return employeService.getAllEmployes();
+    }
 
-	}
+    public Boolean getLoggedIn() {
+        return loggedIn;
+    }
 
-	public void affecterEmployeADepartement(int employeId, int depId) {
-		employeService.affecterEmployeADepartement(employeId, depId);
+    public void setLoggedIn(Boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
-	}
+    public int ajouterEmploye(Employe employe) {
+        employeService.addOrUpdateEmploye(employe);
+        return employe.getId();
+    }
 
+    public void mettreAjourEmailByEmployeId(String email, int employeId) {
+        employeService.mettreAjourEmailByEmployeId(email, employeId);
 
+    }
 
-	public void desaffecterEmployeDuDepartement(int employeId, int depId)
-	{
-		employeService.desaffecterEmployeDuDepartement(employeId, depId);
-	}
+    public void affecterEmployeADepartement(int employeId, int depId) {
+        employeService.affecterEmployeADepartement(employeId, depId);
 
-	public int ajouterContrat(Contrat contrat) {
-		employeService.ajouterContrat(contrat);
-		return contrat.getReference();
-	}
+    }
 
-	public void affecterContratAEmploye(int contratId, int employeId)
-	{
-		employeService.affecterContratAEmploye(contratId, employeId);
-	}
 
+    public void desaffecterEmployeDuDepartement(int employeId, int depId) {
+        employeService.desaffecterEmployeDuDepartement(employeId, depId);
+    }
 
-	public String getEmployePrenomById(int employeId) {
-		return employeService.getEmployePrenomById(employeId);
-	}
+    public int ajouterContrat(Contrat contrat) {
+        employeService.ajouterContrat(contrat);
+        return contrat.getReference();
+    }
 
-	public void deleteEmployeById(int employeId) {
-		employeService.deleteEmployeById(employeId);
+    public void affecterContratAEmploye(int contratId, int employeId) {
+        employeService.affecterContratAEmploye(contratId, employeId);
+    }
 
-	}
-	public void deleteContratById(int contratId) {
-		employeService.deleteContratById(contratId);
-	}
 
-	public int getNombreEmployeJPQL() {
+    public String getEmployePrenomById(int employeId) {
+        return employeService.getEmployePrenomById(employeId);
+    }
 
-		return employeService.getNombreEmployeJPQL();
-	}
+    public void deleteEmployeById(int employeId) {
+        employeService.deleteEmployeById(employeId);
 
-	public List<String> getAllEmployeNamesJPQL() {
+    }
 
-		return employeService.getAllEmployeNamesJPQL();
-	}
+    public void deleteContratById(int contratId) {
+        employeService.deleteContratById(contratId);
+    }
 
-	public List<Employe> getAllEmployeByEntreprise(Entreprise entreprise) {
-		return employeService.getAllEmployeByEntreprise(entreprise);
-	}
+    public int getNombreEmployeJPQL() {
 
-	public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId) {	
-		employeService.mettreAjourEmailByEmployeIdJPQL(email, employeId);
+        return employeService.getNombreEmployeJPQL();
+    }
 
-	}
+    public List<String> getAllEmployeNamesJPQL() {
 
-	public void deleteAllContratJPQL() {
-		employeService.deleteAllContratJPQL();
+        return employeService.getAllEmployeNamesJPQL();
+    }
 
-	}
+    public List<Employe> getAllEmployeByEntreprise(EntrepriseDto entreprise) {
+        return employeService.getAllEmployeByEntreprise(entreprise);
+    }
 
-	public float getSalaireByEmployeIdJPQL(int employeId) {
-		return employeService.getSalaireByEmployeIdJPQL(employeId);
-	}
+    public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId) {
+        employeService.mettreAjourEmailByEmployeIdJPQL(email, employeId);
 
+    }
 
-	public Double getSalaireMoyenByDepartementId(int departementId) {
-		return employeService.getSalaireMoyenByDepartementId(departementId);
-	}
+    public void deleteAllContratJPQL() {
+        employeService.deleteAllContratJPQL();
 
-	public List<Timesheet> getTimesheetsByMissionAndDate(Employe employe, Mission mission, Date dateDebut,
-			Date dateFin) {
-		return employeService.getTimesheetsByMissionAndDate(employe, mission, dateDebut, dateFin);
-	}
+    }
 
-	public String getPrenom() {
-		return prenom;
-	}
+    public float getSalaireByEmployeIdJPQL(int employeId) {
+        return employeService.getSalaireByEmployeIdJPQL(employeId);
+    }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
 
-	public String getNom() {
-		return nom;
-	}
+    public Double getSalaireMoyenByDepartementId(int departementId) {
+        return employeService.getSalaireMoyenByDepartementId(departementId);
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public List<Timesheet> getTimesheetsByMissionAndDate(Employe employe, Mission mission, Date dateDebut,
+                                                         Date dateFin) {
+        return employeService.getTimesheetsByMissionAndDate(employe, mission, dateDebut, dateFin);
+    }
 
-	public String getEmail() {
-		return email;
-	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
 
-	public boolean isActif() {
-		return actif;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setActif(boolean actif) {
-		this.actif = actif;
-	}
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public List<Employe> getEmployes() {
+        employes = employeService.getAllEmployes();
+        return employes;
+    }
 
-	public List<Employe> getEmployes() {
-		employes = employeService.getAllEmployes(); 
-		return employes;
-	}
+    public void setEmployes(List<Employe> employes) {
+        this.employes = employes;
+    }
 
-	public void setEmployes(List<Employe> employes) {
-		this.employes = employes;
-	}
+    public Integer getEmployeIdToBeUpdated() {
+        return employeIdToBeUpdated;
+    }
 
-	public Integer getEmployeIdToBeUpdated() {
-		return employeIdToBeUpdated;
-	}
+    public void setEmployeIdToBeUpdated(Integer employeIdToBeUpdated) {
+        this.employeIdToBeUpdated = employeIdToBeUpdated;
+    }
 
-	public void setEmployeIdToBeUpdated(Integer employeIdToBeUpdated) {
-		this.employeIdToBeUpdated = employeIdToBeUpdated;
-	}
+    public Employe getAuthenticatedUser() {
+        return authenticatedUser;
+    }
 
-	public Employe getAuthenticatedUser() {
-		return authenticatedUser;
-	}
-
-	public void setAuthenticatedUser(Employe authenticatedUser) {
-		this.authenticatedUser = authenticatedUser;
-	}
+    public void setAuthenticatedUser(Employe authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
+    }
 
 }

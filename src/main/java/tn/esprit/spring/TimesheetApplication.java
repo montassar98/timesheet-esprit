@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
 
+import org.apache.log4j.Logger;
 import org.ocpsoft.rewrite.servlet.RewriteFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,6 +20,7 @@ import tn.esprit.spring.config.LoginFilter;
 @EnableAutoConfiguration
 public class TimesheetApplication {
 
+	public static Logger log = Logger.getLogger(TimesheetApplication.class.getName());
 	public static void main(String[] args) {SpringApplication.run(TimesheetApplication.class, args);}
 
 	@Bean

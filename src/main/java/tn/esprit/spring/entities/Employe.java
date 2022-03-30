@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -47,7 +46,7 @@ public class Employe implements Serializable {
 	@JsonIgnore
 	@ManyToMany(mappedBy="employes",fetch=FetchType.EAGER )
 	//@NotNull
-	private List<Departement> departements;
+	private List<DepartementDto> departements;
 	
 	@JsonIgnore
 	//@JsonBackReference
@@ -156,11 +155,11 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 
-	public List<Departement> getDepartements() {
+	public List<DepartementDto> getDepartements() {
 		return departements;
 	}
 
-	public void setDepartements(List<Departement> departement) {
+	public void setDepartements(List<DepartementDto> departement) {
 		this.departements = departement;
 	}
 

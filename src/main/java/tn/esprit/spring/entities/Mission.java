@@ -24,7 +24,7 @@ public class Mission implements Serializable {
 	private String description;
 	
 	@ManyToOne
-	private Departement departement;
+	private DepartementDto departement;
 	
 	@OneToMany(mappedBy="mission")
 	private  List<Timesheet> timesheets;
@@ -63,11 +63,11 @@ public class Mission implements Serializable {
 		this.description = description;
 	}
 
-	public Departement getDepartement() {
+	public DepartementDto getDepartement() {
 		return departement;
 	}
 
-	public void setDepartement(Departement departement) {
+	public void setDepartement(DepartementDto departement) {
 		this.departement = departement;
 	}
 

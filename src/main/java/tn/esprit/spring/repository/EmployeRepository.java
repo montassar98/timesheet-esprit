@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.EntrepriseDto;
 
 @Repository
 public interface EmployeRepository extends CrudRepository<Employe, Integer>  {
@@ -32,7 +32,7 @@ public interface EmployeRepository extends CrudRepository<Employe, Integer>  {
 			+ "join emp.departements dps "
 			+ "join dps.entreprise entrep "
 			+ "where entrep=:entreprise")
-    public List<Employe> getAllEmployeByEntreprisec(@Param("entreprise") Entreprise entreprise);
+    public List<Employe> getAllEmployeByEntreprisec(@Param("entreprise") EntrepriseDto entreprise);
     
     @Modifying
     @Transactional

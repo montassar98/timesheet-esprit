@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.esprit.spring.entities.Departement;
+import tn.esprit.spring.entities.DepartementDto;
 import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Role;
@@ -38,7 +38,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
     
 	public void affecterMissionADepartement(int missionId, int depId) {
 		Mission mission = missionRepository.findById(missionId).get();
-		Departement dep = deptRepoistory.findById(depId).get();
+		DepartementDto dep = deptRepoistory.findById(depId).get();
 		mission.setDepartement(dep);
 		missionRepository.save(mission);
 		
@@ -70,7 +70,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		}
 		//verifier s'il est le chef de departement de la mission en question
 		boolean chefDeLaMission = false;
-		for(Departement dep : validateur.getDepartements()){
+		for(DepartementDto dep : validateur.getDepartements()){
 			if(dep.getId() == mission.getDepartement().getId()){
 				chefDeLaMission = true;
 				break;

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import tn.esprit.spring.entities.Departement;
-import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.DepartementDto;
+import tn.esprit.spring.entities.EntrepriseDto;
 import tn.esprit.spring.services.IEmployeService;
 import tn.esprit.spring.services.IEntrepriseService;
 import tn.esprit.spring.services.ITimesheetService;
@@ -30,11 +30,9 @@ public class RestControlEntreprise {
 	ITimesheetService itimesheetservice;
 	
 	// Ajouter Entreprise : http://localhost:8081/SpringMVC/servlet/ajouterEntreprise
-	//{"id":1,"name":"SSII Consulting","raisonSocial":"Cite El Ghazela"}
-
 	@PostMapping("/ajouterEntreprise")
 	@ResponseBody
-	public int ajouterEntreprise(@RequestBody Entreprise ssiiConsulting) {
+	public int ajouterEntreprise(@RequestBody EntrepriseDto ssiiConsulting) {
 		ientrepriseservice.ajouterEntreprise(ssiiConsulting);
 		return ssiiConsulting.getId();
 	}
@@ -56,17 +54,15 @@ public class RestControlEntreprise {
     // http://localhost:8081/SpringMVC/servlet/getEntrepriseById/1
     @GetMapping(value = "getEntrepriseById/{identreprise}")
     @ResponseBody
-	public Entreprise getEntrepriseById(@PathVariable("identreprise") int entrepriseId) {
+	public EntrepriseDto getEntrepriseById(@PathVariable("identreprise") int entrepriseId) {
 
 		return ientrepriseservice.getEntrepriseById(entrepriseId);
 	}
     
     // http://localhost:8081/SpringMVC/servlet/ajouterDepartement
- 	//{"id":1,"name":"Telecom"}
-
  	@PostMapping("/ajouterDepartement")
  	@ResponseBody
-	public int ajouterDepartement(@RequestBody Departement dep) {
+	public int ajouterDepartement(@RequestBody DepartementDto dep) {
 		return ientrepriseservice.ajouterDepartement(dep);
 	}
 	

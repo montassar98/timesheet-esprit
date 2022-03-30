@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Entreprise implements Serializable{
+public class EntrepriseDto implements Serializable{
 	
 	/**
 	 * 
@@ -33,13 +33,13 @@ public class Entreprise implements Serializable{
 	@OneToMany(mappedBy="entreprise", 
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch=FetchType.EAGER)
-	private List<Departement> departements = new ArrayList<>();
+	private List<DepartementDto> departements = new ArrayList<>();
 
-	public Entreprise() {
+	public EntrepriseDto() {
 		super();
 	}
 
-	public Entreprise(String name, String raisonSocial) {
+	public EntrepriseDto(String name, String raisonSocial) {
 		this.name = name;
 		this.raisonSocial = raisonSocial;
 	}
@@ -68,16 +68,16 @@ public class Entreprise implements Serializable{
 		this.raisonSocial = raisonSocial;
 	}
 
-	public List<Departement> getDepartements() {
+	public List<DepartementDto> getDepartements() {
 		return departements;
 	}
 
-	public void setDepartements(List<Departement> departements) {
+	public void setDepartements(List<DepartementDto> departements) {
 		this.departements = departements;
 	}
 	
 	
-	public void addDepartement(Departement departement){
+	public void addDepartement(DepartementDto departement){
 		departement.setEntreprise(this);
 		this.departements.add(departement);
 	}

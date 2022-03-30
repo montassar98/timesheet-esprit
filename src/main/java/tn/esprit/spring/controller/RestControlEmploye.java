@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.EntrepriseDto;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Timesheet;
 import tn.esprit.spring.services.IEmployeService;
@@ -33,9 +33,7 @@ public class RestControlEmploye {
 	ITimesheetService itimesheetservice;
 
 	
-	// http://localhost:8081/SpringMVC/servlet/ajouterEmployer
-	//{"id":1,"nom":"kallel", "prenom":"khaled", "email":"Khaled.kallel@ssiiconsulting.tn", "isActif":true, "role":"INGENIEUR"}
-	
+
 	@PostMapping("/ajouterEmployer")
 	@ResponseBody
 	public Employe ajouterEmploye(@RequestBody Employe employe)
@@ -126,7 +124,7 @@ public class RestControlEmploye {
     @GetMapping(value = "getAllEmployeByEntreprise/{identreprise}")
     @ResponseBody
 	public List<Employe> getAllEmployeByEntreprise(@PathVariable("identreprise") int identreprise) {
-    	Entreprise entreprise=ientrepriseservice.getEntrepriseById(identreprise);
+    	EntrepriseDto entreprise=ientrepriseservice.getEntrepriseById(identreprise);
 		return iemployeservice.getAllEmployeByEntreprise(entreprise);
 	}
 
