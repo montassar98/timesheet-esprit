@@ -97,7 +97,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			</dependency>
+			<version>1.18.22</version>
+		</dependency>
 		<!-- JSF -->
 
 	</dependencies>
