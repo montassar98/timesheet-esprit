@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.EntrepriseDto;
+import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.Timesheet;
@@ -212,7 +212,7 @@ public class ControllerEmployeImpl {
         return employeService.getAllEmployeNamesJPQL();
     }
 
-    public List<Employe> getAllEmployeByEntreprise(EntrepriseDto entreprise) {
+    public List<Employe> getAllEmployeByEntreprise(Entreprise entreprise) {
         return employeService.getAllEmployeByEntreprise(entreprise);
     }
 

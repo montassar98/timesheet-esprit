@@ -2,13 +2,13 @@ package tn.esprit.spring.services;
 
 import java.util.List;
 
-import tn.esprit.spring.entities.DepartementDto;
+import tn.esprit.spring.entities.Departement;
 
 
 public interface IDepartementService {
 	
 	
-	public List<DepartementDto> getAllDepartements();
+	public List<Departement> getAllDepartements();
 
 
 	

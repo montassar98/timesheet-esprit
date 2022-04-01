@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class DepartementDto implements Serializable {
+public class Departement implements Serializable {
 
 	private static final long serialVersionUID = -357738161698377833L;
 
@@ -34,13 +34,13 @@ public class DepartementDto implements Serializable {
 	private List<Mission> missions;
 	
 	@ManyToOne
-	private EntrepriseDto entreprise;
+	private Entreprise entreprise;
 
-	public DepartementDto() {
+	public Departement() {
 		super();
 	}
 	
-	public DepartementDto(String name) {
+	public Departement(String name) {
 		this.name = name;
 	}
 	
@@ -76,11 +76,11 @@ public class DepartementDto implements Serializable {
 		this.missions = missions;
 	}
 
-	public EntrepriseDto getEntreprise() {
+	public Entreprise getEntreprise() {
 		return entreprise;
 	}
 
-	public void setEntreprise(EntrepriseDto entreprise) {
+	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
 	

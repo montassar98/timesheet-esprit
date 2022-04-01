@@ -46,7 +46,7 @@ public class Employe implements Serializable {
 	@JsonIgnore
 	@ManyToMany(mappedBy="employes",fetch=FetchType.EAGER )
 	//@NotNull
-	private List<DepartementDto> departements;
+	private List<Departement> departements;
 	
 	@JsonIgnore
 	//@JsonBackReference
@@ -155,11 +155,11 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 
-	public List<DepartementDto> getDepartements() {
+	public List<Departement> getDepartements() {
 		return departements;
 	}
 
-	public void setDepartements(List<DepartementDto> departement) {
+	public void setDepartements(List<Departement> departement) {
 		this.departements = departement;
 	}
 

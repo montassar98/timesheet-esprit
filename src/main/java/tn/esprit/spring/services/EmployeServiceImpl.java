@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tn.esprit.spring.entities.Contrat;
-import tn.esprit.spring.entities.DepartementDto;
+import tn.esprit.spring.entities.Departement;
 import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.EntrepriseDto;
+import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Timesheet;
 import tn.esprit.spring.repository.ContratRepository;
@@ -52,7 +52,7 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	@Transactional	
 	public void affecterEmployeADepartement(int employeId, int depId) {
-		DepartementDto depManagedEntity = deptRepoistory.findById(depId).get();
+		Departement depManagedEntity = deptRepoistory.findById(depId).get();
 		Employe employeManagedEntity = employeRepository.findById(employeId).get();
 
 		if(depManagedEntity.getEmployes() == null){
@@ -72,7 +72,7 @@ public class EmployeServiceImpl implements IEmployeService {
 	@Transactional
 	public void desaffecterEmployeDuDepartement(int employeId, int depId)
 	{
-		DepartementDto dep = deptRepoistory.findById(depId).get();
+		Departement dep = deptRepoistory.findById(depId).get();
 
 		int employeNb = dep.getEmployes().size();
 		for(int index = 0; index < employeNb; index++){
@@ -111,7 +111,7 @@ public class EmployeServiceImpl implements IEmployeService {
 		//Desaffecter l'employe de tous les departements
 		//c'est le bout master qui permet de mettre a jour
 		//la table d'association
-		for(DepartementDto dep : employe.getDepartements()){
+		for(Departement dep : employe.getDepartements()){
 			dep.getEmployes().remove(employe);
 		}
 
@@ -133,7 +133,7 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	}
 
-	public List<Employe> getAllEmployeByEntreprise(EntrepriseDto entreprise) {
+	public List<Employe> getAllEmployeByEntreprise(Entreprise entreprise) {
 		return employeRepository.getAllEmployeByEntreprisec(entreprise);
 	}
 

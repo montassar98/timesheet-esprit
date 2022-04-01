@@ -10,18 +10,25 @@ import org.ocpsoft.rewrite.servlet.RewriteFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import tn.esprit.spring.config.LoginFilter;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-public class TimesheetApplication {
+public class TimesheetApplication extends SpringBootServletInitializer {
 
 	public static Logger log = Logger.getLogger(TimesheetApplication.class.getName());
 	public static void main(String[] args) {SpringApplication.run(TimesheetApplication.class, args);}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(TimesheetApplication.class);
+	}
 
 	@Bean
 	public ServletRegistrationBean servletRegistrationBean() {
@@ -36,13 +43,13 @@ public class TimesheetApplication {
 		return rwFilter;
 	}
 
-
+	/*
 	@Bean
 	public FilterRegistrationBean loginFilter() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
 		registration.addUrlPatterns("/pages/*");
 		registration.setFilter(new LoginFilter());
 		return registration;
-	}
+	}*/
  
 }

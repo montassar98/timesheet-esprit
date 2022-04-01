@@ -5,7 +5,7 @@ import java.util.List;
 
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.EntrepriseDto;
+import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Timesheet;
 
@@ -25,7 +25,7 @@ public interface IEmployeService {
 	public void deleteContratById(int contratId);
 	public int getNombreEmployeJPQL();
 	public List<String> getAllEmployeNamesJPQL();
-	public List<Employe> getAllEmployeByEntreprise(EntrepriseDto entreprise);
+	public List<Employe> getAllEmployeByEntreprise(Entreprise entreprise);
 	public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId);
 	public void deleteAllContratJPQL();
 	public float getSalaireByEmployeIdJPQL(int employeId);

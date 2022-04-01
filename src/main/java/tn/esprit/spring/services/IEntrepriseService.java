@@ -2,16 +2,16 @@ package tn.esprit.spring.services;
 
 import java.util.List;
 
-import tn.esprit.spring.entities.DepartementDto;
-import tn.esprit.spring.entities.EntrepriseDto;
+import tn.esprit.spring.entities.Departement;
+import tn.esprit.spring.entities.Entreprise;
 
 public interface IEntrepriseService {
 	
-	public int ajouterEntreprise(EntrepriseDto entreprise);
-	public int ajouterDepartement(DepartementDto dep);
+	public int ajouterEntreprise(Entreprise entreprise);
+	public int ajouterDepartement(Departement dep);
 	void affecterDepartementAEntreprise(int depId, int entrepriseId);
 	List<String> getAllDepartementsNamesByEntreprise(int entrepriseId);
 	public void deleteEntrepriseById(int entrepriseId);
 	public void deleteDepartementById(int depId);
-	public EntrepriseDto getEntrepriseById(int entrepriseId);
+	public Entreprise getEntrepriseById(int entrepriseId);
 }
