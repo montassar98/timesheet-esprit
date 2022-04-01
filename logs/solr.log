@@ -1,0 +1,3 @@
+INFO  - 2022-04-01 12:28:47.288; tn.esprit.spring.TimesheetApplication; Starting ServletRegistrationBean
+INFO  - 2022-04-01 12:28:47.292; tn.esprit.spring.TimesheetApplication; Starting FilterRegistrationBean
+INFO  - 2022-04-01 12:28:47.299; tn.esprit.spring.TimesheetApplication; Starting FilterRegistrationBean
