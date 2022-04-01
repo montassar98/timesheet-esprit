@@ -15,7 +15,6 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 import tn.esprit.spring.config.LoginFilter;
-import tn.esprit.spring.services.TimesheetServiceImpl;
 
 @SpringBootApplication
 @EnableAutoConfiguration
