@@ -19,7 +19,6 @@ import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.Timesheet;
-import tn.esprit.spring.services.EmployeServiceImpl;
 import tn.esprit.spring.services.IEmployeService;
 
 
@@ -28,7 +27,7 @@ import tn.esprit.spring.services.IEmployeService;
 @ELBeanName(value = "employeController")
 @Join(path = "/", to = "/login.jsf")
 public class ControllerEmployeImpl  {
-	private static final Logger loggerr= Logger.getLogger(ControllerEmployeImpl.class);
+	private static final Logger logger= Logger.getLogger(ControllerEmployeImpl.class);
 	@Autowired
 	IEmployeService employeService;
 	private String login; 
@@ -54,7 +53,7 @@ public class ControllerEmployeImpl  {
 		authenticatedUser=employeService.authenticate(login, password);
 		if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
 			navigateTo = "/pages/admin/welcome.xhtml?faces-redirect=true";
-			Logger.getLogger(ControllerEmployeImpl.class).info("logiin success");
+			logger.info("logiin success");
 			loggedIn = true;
 		}		
 
