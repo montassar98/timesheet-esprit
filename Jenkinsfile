@@ -31,7 +31,7 @@ pipeline {
                 bat "mvn sonar:sonar"
             }
         }
-        stage('Deploy to nexus'){
+        stage('Deploy to Nexus'){
             steps{
                 
                 nexusArtifactUploader artifacts: [
@@ -49,6 +49,11 @@ pipeline {
                     version: '1.1'
             }
         }
+        stage('Deploy to Docker'){
+            steps{
+                bat "docker pull docker/dev-environments-java:stable-1"
+            }
+        }
     }
     post{
         // If Maven was able to run the tests, even if some of the test
@@ -57,6 +62,7 @@ pipeline {
             junit '**/target/surefire-reports/TEST-*.xml'
             archiveArtifacts 'target/*.jar'
         }
+
         failure{
             emailext body: 'test', subject: 'test', to: 'fedi.mannoubi@esprit.tn'
         }
