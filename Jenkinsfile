@@ -39,5 +39,8 @@ pipeline {
         always{
             emailext body: 'test', subject: 'test', to: 'fedi.mannoubi@esprit.tn'
         }
+        failure{
+            emailext body: 'test', subject: 'test', to: 'fedi.mannoubi@esprit.tn'
+        }
     }
 }
