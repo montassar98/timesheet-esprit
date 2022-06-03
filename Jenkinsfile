@@ -13,6 +13,7 @@ pipeline {
 
                 // To run Maven on a Windows agent, use
                  bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                 bat "mvn clean install"
             }
 
             post {
