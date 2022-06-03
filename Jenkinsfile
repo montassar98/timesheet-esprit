@@ -38,7 +38,7 @@ pipeline {
                 [
                     artifactId: 'timesheet', 
                     classifier: '', 
-                    file: 'target/timesheet-1.1.jar', 
+                    file: 'target/timesheet-1.2.jar', 
                     type: 'jar']], 
                     credentialsId: 'b87cdfea-1867-45a8-9283-0062de2cf821', 
                     groupId: 'tn.esprit.spring', 
@@ -46,7 +46,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'timesheet-esprit-snaps', 
-                    version: '1.1'
+                    version: '1.2'
             }
         }
     }
