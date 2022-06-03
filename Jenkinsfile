@@ -27,18 +27,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing app with Sonar'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying app'
-                bat "mvn clean"
-                bat "mvn package"
-                //bat "mvn deploy"
                 bat "mvn sonar:sonar"
             }
         }
-        stage('Upload to nexus'){
+        stage('Deploy to nexus'){
             steps{
                 nexusArtifactUploader artifacts: [
                 [
