@@ -33,8 +33,25 @@ pipeline {
             steps {
                 echo 'Deploying app'
                 bat "mvn package"
-                bat "mvn deploy"
+                //bat "mvn deploy"
                 bat "mvn sonar:sonar"
+            }
+        }
+        stage('Upload to nexus'){
+            steps{
+                nexusArtifactUploader artifacts: [
+                [
+                    artifactId: 'timesheet-esprit', 
+                    classifier: '', 
+                    file: 'target/timesheet-esprit-2.2.2.RELEASE', 
+                    type: 'war']], 
+                    credentialsId: 'b87cdfea-1867-45a8-9283-0062de2cf821', 
+                    groupId: 'org.springframework.boot', 
+                    nexusUrl: 'localhost:8081', 
+                    nexusVersion: 'nexus2', 
+                    protocol: 'http', 
+                    repository: 'http://localhost:8081/repository/timesheet-esprit/', 
+                    version: '2.2.2.RELEASE'
             }
         }
     }
