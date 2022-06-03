@@ -26,13 +26,15 @@ pipeline {
         } 
         stage('Test') {
             steps {
-                echo 'Testing app'
-                bat "mvn sonar:sonar"
+                echo 'Testing app with Sonar'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying app'
+                bat "mvn package"
+                bat "mvn deploy"
+                bat "mvn sonar:sonar"
             }
         }
     }
