@@ -57,7 +57,6 @@ pipeline {
             junit '**/target/surefire-reports/TEST-*.xml'
             archiveArtifacts 'target/*.jar'
         }
-
         failure{
             emailext body: 'test', subject: 'test', to: 'fedi.mannoubi@esprit.tn'
         }
