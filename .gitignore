@@ -33,4 +33,3 @@ build/
 # Project exclude paths
 /src/main/webapp/WEB-INF/classes/
 *.log
-logs/solr.log
