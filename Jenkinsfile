@@ -2,7 +2,7 @@ pipeline {
     agent any
     //I didnt add any specifed tools
     
-    enviroment{
+    environment{
         dockerhub_credentials = credentials('fedimanouvi-dockerhub')
     }
     
