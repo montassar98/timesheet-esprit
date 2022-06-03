@@ -36,7 +36,7 @@ pipeline {
                 [
                     artifactId: 'timesheet-esprit', 
                     classifier: '', 
-                    file: 'target/timesheet-esprit-2.2.2.RELEASE', 
+                    file: 'target/timesheet-1.1', 
                     type: 'war']], 
                     credentialsId: 'a27d902a-3811-40e2-895b-f607d25e3248', 
                     groupId: 'org.springframework.boot', 
