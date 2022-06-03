@@ -35,12 +35,12 @@ pipeline {
                 bat "mvn clean install"
                 nexusArtifactUploader artifacts: [
                 [
-                    artifactId: 'timesheet-esprit', 
+                    artifactId: 'timesheet', 
                     classifier: '', 
                     file: 'target/timesheet-1.1.jar', 
-                    type: 'war']], 
+                    type: 'jar']], 
                     credentialsId: 'a27d902a-3811-40e2-895b-f607d25e3248', 
-                    groupId: 'org.springframework.boot', 
+                    groupId: 'tn.esprit.spring', 
                     nexusUrl: 'localhost:8081', 
                     nexusVersion: 'nexus2', 
                     protocol: 'http', 
