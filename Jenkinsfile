@@ -1,8 +1,7 @@
 pipeline {
     agent any
-
-  
-
+    //I didnt add any specifed tools
+    
     stages {
         stage('Build') {
             steps {
@@ -34,6 +33,11 @@ pipeline {
             steps {
                 echo 'Deploying app'
             }
+        }
+    }
+    post{
+        always{
+            emailext body: 'test', subject: 'test', to: 'fedi.mannoubi@esprit.tn'
         }
     }
 }
