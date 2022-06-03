@@ -32,6 +32,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying app'
+                bat "mvn clean"
                 bat "mvn package"
                 //bat "mvn deploy"
                 bat "mvn sonar:sonar"
@@ -45,7 +46,7 @@ pipeline {
                     classifier: '', 
                     file: 'target/timesheet-esprit-2.2.2.RELEASE', 
                     type: 'war']], 
-                    credentialsId: 'b87cdfea-1867-45a8-9283-0062de2cf821', 
+                    credentialsId: 'a27d902a-3811-40e2-895b-f607d25e3248', 
                     groupId: 'org.springframework.boot', 
                     nexusUrl: 'localhost:8081', 
                     nexusVersion: 'nexus2', 
