@@ -42,9 +42,9 @@ pipeline {
                     credentialsId: 'a27d902a-3811-40e2-895b-f607d25e3248', 
                     groupId: 'tn.esprit.spring', 
                     nexusUrl: 'localhost:8081', 
-                    nexusVersion: 'nexus2', 
+                    nexusVersion: 'nexus3', 
                     protocol: 'http', 
-                    repository: 'http://localhost:8081/repository/timesheet-esprit/', 
+                    repository: 'timesheet-esprit', 
                     version: '1.1'
             }
         }
