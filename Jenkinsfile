@@ -45,7 +45,7 @@ pipeline {
                     nexusUrl: 'localhost:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
-                    repository: 'timesheet-esprit', 
+                    repository: 'timesheet-esprit-snaps', 
                     version: '1.1'
             }
         }
